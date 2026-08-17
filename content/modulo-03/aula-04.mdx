@@ -1,0 +1,242 @@
+export const meta = {
+  modulo: "Módulo 3 — Controle de Fluxo",
+  titulo: "Aula 4 — continue e match-case",
+  duracao: "30 a 40 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+Ao finalizar esta aula, você será capaz de:
+
+- Usar `continue` para pular a repetição atual de um laço, sem
+  interrompê-lo por completo.
+- Explicar a diferença entre `continue` e `break`.
+- Reescrever cadeias longas de `if/elif/else` usando `match`/`case`.
+- Usar guardas (`case valor if condição:`) para comparações que a
+  correspondência simples de padrão não resolve sozinha.
+- Decidir quando `match`/`case` deixa o código mais claro que
+  `if`/`elif` — e quando não deixa.
+
+## continue — pulando uma repetição
+
+Você já conhece o `break` (Aula 2): ele interrompe o laço inteiro,
+imediatamente. O `continue` é mais sutil — ele pula **só a repetição
+atual**, volta para o topo do laço e segue para a próxima.
+
+Pense em uma lista de tarefas que você está revisando item por item: se
+um item não se aplica a você hoje, você não joga a lista inteira fora
+(isso seria o `break`) — você simplesmente pula aquele item e continua
+para o próximo (isso é o `continue`).
+
+<CodeBlock filename="continue_simples.py" code={`for numero in range(1, 11):
+    if numero % 2 == 0:
+        continue
+    print(numero)`} />
+
+Saída: `1, 3, 5, 7, 9` — cada número par faz o `continue` disparar, o
+`print()` daquela repetição é pulado, e o laço segue para o próximo
+número.
+
+<Diagrama
+  titulo="break vs. continue"
+  passos={[
+    { titulo: "Repetição do laço", descricao: "início de uma volta" },
+    { titulo: "continue → pula só esta volta", descricao: "volta ao topo do laço" },
+    { titulo: "break → sai do laço inteiro", descricao: "nada depois disso roda" },
+  ]}
+/>
+
+<Atencao title="continue não é break">
+  É comum, no início, confundir os dois. `continue` mantém o laço vivo —
+  ele só pula o que vem depois dele *dentro daquela repetição*. `break`
+  mata o laço, e o programa segue direto para o código depois do
+  `while`/`for`.
+</Atencao>
+
+`continue` também funciona dentro de `while`:
+
+<CodeBlock filename="continue_while.py" code={`contador = 0
+
+while contador < 10:
+    contador = contador + 1
+    if contador % 3 == 0:
+        continue
+    print(contador)`} />
+
+<Dica>
+  Assim como no `while True` + `break` da Aula 2, tome cuidado ao usar
+  `continue` dentro de um `while`: a linha que atualiza a variável da
+  condição (aqui, `contador = contador + 1`) precisa vir **antes** do
+  `continue`, ou o laço nunca avança — e você cria um loop infinito.
+</Dica>
+
+## match / case — uma alternativa ao elif
+
+Você já viu, na Aula 1 desta seção, que uma cadeia longa de `elif` pode
+ficar difícil de acompanhar. Quando você está comparando **o mesmo
+valor** contra várias possibilidades conhecidas, o Python oferece uma
+sintaxe alternativa: `match`/`case`.
+
+<CodeBlock filename="match_simples.py" code={`dia = 3
+
+match dia:
+    case 1:
+        print("Segunda-feira")
+    case 2:
+        print("Terça-feira")
+    case 3:
+        print("Quarta-feira")
+    case _:
+        print("Dia inválido")`} />
+
+`match dia:` diz "compare o valor de `dia` com os padrões abaixo".
+Cada `case` é um padrão possível. `case _:` é o **coringa** — funciona
+como o `else` de um `if`, capturando qualquer valor que não bateu com
+nenhum `case` anterior.
+
+## Agrupando valores com |
+
+Vários valores podem levar ao mesmo resultado, combinados com `|`:
+
+<CodeBlock filename="match_agrupado.py" code={`dia = 6
+
+match dia:
+    case 6 | 7:
+        print("Fim de semana")
+    case _:
+        print("Dia de semana")`} />
+
+## O problema das comparações de intervalo
+
+Até aqui, todo `case` comparava um valor **exato**. Mas e se você
+precisar de algo como "se a nota for maior ou igual a 90"? A tentação
+natural é escrever isso:
+
+<CodeBlock filename="errado.py" code={`nota = 85
+
+match nota:
+    case >= 90:
+        print("Conceito A")`} />
+
+<Atencao title="case >= 90: não existe">
+  Essa linha gera `SyntaxError`. `match`/`case` compara **padrões**, não
+  expressões booleanas soltas — `>= 90` sozinho não é um padrão válido.
+  Para comparar um intervalo, capture o valor em uma variável de padrão
+  (qualquer nome, aqui usamos `n`) e adicione uma **guarda**: uma
+  condição extra, depois de um `if`, no final do `case`.
+</Atencao>
+
+<CodeBlock filename="match_com_guarda.py" code={`nota = 85
+
+match nota:
+    case n if n >= 90:
+        print("Conceito A")
+    case n if n >= 70:
+        print("Conceito B")
+    case n if n >= 50:
+        print("Conceito C")
+    case _:
+        print("Reprovado")`} />
+
+Aqui, `n` captura o valor de `nota` para aquele `case`, e `if n >= 90`
+é a guarda — só entra nesse `case` se a captura **e** a condição forem
+verdadeiras. É essencialmente o mesmo resultado do exemplo com
+`if/elif/else` da Aula 1, só que escrito na sintaxe do `match`.
+
+<Curiosidade>
+  `match`/`case` foi introduzido no Python 3.10, em 2021 — é um recurso
+  relativamente novo na linguagem, chamado formalmente de "correspondência
+  estrutural de padrões" (structural pattern matching, PEP 634). Durante
+  muitos anos, o Python foi conhecido justamente por **não** ter um
+  comando de switch/case como C ou Java — Guido van Rossum, o criador da
+  linguagem, considerava que `if/elif/else` já resolvia bem o problema. O
+  `match` moderno não é um switch tradicional: ele compara padrões (que
+  podem incluir listas, tuplas e estruturas mais complexas, fora do
+  escopo desta aula), não só valores simples.
+</Curiosidade>
+
+## Quando usar match/case em vez de elif
+
+<ComoUmProgramadorPensa>
+  A pergunta que decide não é "qual sintaxe é mais moderna", é "qual
+  fica mais fácil de ler". Quando você tem vários valores fixos e
+  conhecidos para comparar contra a mesma variável — como um menu de
+  opções, um código de status, um dia da semana — `match`/`case`
+  costuma deixar a intenção mais clara à primeira vista. Quando as
+  condições envolvem combinações de `and`/`or` entre variáveis
+  diferentes, ou intervalos que já ficam claros com `elif`, forçar um
+  `match` com várias guardas geralmente não compensa — `if/elif/else`
+  continua sendo a ferramenta mais direta. As duas sintaxes convivem;
+  nenhuma substitui a outra por completo.
+</ComoUmProgramadorPensa>
+
+## Testando na prática
+
+<PyPlayground
+  titulo="continue_e_match"
+  codigoInicial={`for numero in range(1, 8):
+    if numero % 2 == 0:
+        continue
+    print(numero)
+
+nota = 75
+match nota:
+    case n if n >= 90:
+        print("Conceito A")
+    case n if n >= 70:
+        print("Conceito B")
+    case n if n >= 50:
+        print("Conceito C")
+    case _:
+        print("Reprovado")`}
+  validacao={{ saidaEsperada: "1\n3\n5\n7\nConceito B" }}
+/>
+
+## Resumo da aula
+
+<Resumo>
+  `continue` pula para a próxima repetição do laço, sem interrompê-lo —
+  diferente de `break`, que encerra o laço inteiro. `match`/`case`
+  compara um valor contra vários padrões, com `case _:` funcionando como
+  o `else`; valores podem ser agrupados com `|`. Comparações de
+  intervalo exigem uma guarda (`case n if condição:`), porque `case >=
+  90:` sozinho não é sintaxe válida. Nenhuma das duas sintaxes substitui
+  `if/elif/else` por completo — são ferramentas complementares.
+</Resumo>
+
+## Exercícios
+
+### Fixação
+
+1. Qual a diferença entre `break` e `continue` dentro de um laço?
+2. O que `case _:` representa dentro de um `match`?
+3. Por que `case >= 90:` gera erro? O que se deve escrever no lugar?
+4. Como agrupar dois valores diferentes no mesmo `case`?
+
+### Aplicação
+
+5. Escreva um programa que percorra os números de 1 a 20 e, usando
+   `continue`, imprima apenas os múltiplos de 3 (pulando todos os
+   outros).
+6. Reescreva, usando `match`/`case` com guardas, a classificação de
+   `nota` em "Conceito A/B/C/Reprovado" que fizemos com `if/elif/else`
+   na Aula 1 desta seção.
+
+<Desafio>
+  Crie um programa que simule um cardápio do dia usando `match`/`case`:
+  uma variável `dia_da_semana` (de 1 a 7) deve produzir uma mensagem
+  diferente para cada dia, com um caso especial que agrupa sábado e
+  domingo (`case 6 | 7:`) exibindo "Fim de semana — cardápio especial!".
+  Em seguida, crie uma lista com os nomes de alguns pratos do dia e,
+  usando um `for` com `continue`, pule qualquer prato cujo nome comece
+  com a letra "X" (simulando um prato em falta no estoque), imprimindo
+  apenas os disponíveis.
+</Desafio>
+
+## Próxima aula
+
+No **Projeto do Módulo 3 — Jogo de Adivinhação**, vamos reunir tudo o
+que vimos em Controle de Fluxo — condicionais, `while`, `for`/`range`,
+`continue` e `match`/`case` — em um programa completo e interativo, que
+fecha o módulo.

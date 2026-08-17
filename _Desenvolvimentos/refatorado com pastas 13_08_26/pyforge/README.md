@@ -1,6 +1,5 @@
 # PyForge
 
-
 **Aprenda Python. Construa o futuro.**
 
 PyForge é uma plataforma moderna de ensino de Python: um curso completo
@@ -16,3 +15,4 @@ open source, em vez de apenas um punhado de textos soltos.
 - [Lucide Icons](https://lucide.dev/)
 
 ## Rodando localmente
+

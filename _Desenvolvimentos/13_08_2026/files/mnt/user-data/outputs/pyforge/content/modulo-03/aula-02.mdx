@@ -1,0 +1,113 @@
+export const meta = {
+  modulo: "Módulo 3 — Controle de Fluxo",
+  titulo: "Aula 2 — Laço while",
+  duracao: "30 a 40 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+- Repetir um bloco de código com `while`.
+- Evitar o erro mais perigoso desta aula: o loop infinito.
+- Usar `while True` com `break` para loops controlados por evento.
+
+## O que é um laço?
+
+Um **laço** (ou *loop*) repete um bloco de código enquanto uma condição
+for verdadeira. É a resposta de Python para "fazer a mesma coisa várias
+vezes sem copiar e colar o código".
+
+## while — enquanto
+
+<CodeBlock filename="while_simples.py" code={`contador = 1
+
+while contador <= 5:
+    print(contador)
+    contador = contador + 1`} />
+
+O Python verifica a condição (`contador <= 5`). Se for verdadeira, executa
+o bloco indentado e volta a verificar. Isso se repete até a condição virar
+falsa.
+
+<Diagrama
+  titulo="Como o while funciona"
+  passos={[
+    { titulo: "Verifica a condição", descricao: "contador <= 5 ?" },
+    { titulo: "Verdadeira → executa o bloco", descricao: "print, incrementa" },
+    { titulo: "Volta a verificar", descricao: "repete até ficar falsa" },
+    { titulo: "Falsa → sai do laço", descricao: "continua depois do while" },
+  ]}
+/>
+
+<Atencao title="Loop infinito">
+  Se você esquecer de atualizar a variável usada na condição
+  (`contador = contador + 1`), o laço nunca termina — o programa trava.
+  Esse é, de longe, o erro mais comum ao aprender `while`. Se isso
+  acontecer no seu terminal, `Ctrl+C` interrompe a execução.
+</Atencao>
+
+## Testando na prática
+
+<PyPlayground
+  titulo="while_simples"
+  codigoInicial={`contador = 1
+
+while contador <= 5:
+    print(contador)
+    contador = contador + 1`}
+  validacao={{ saidaEsperada: "1\n2\n3\n4\n5" }}
+/>
+
+## while True + break
+
+Às vezes você não sabe de antemão quantas vezes o laço vai rodar — por
+exemplo, "repita até a pessoa digitar 'sair'". Nesses casos, um padrão
+comum é `while True` (uma condição sempre verdadeira) combinado com
+`break` (que interrompe o laço imediatamente):
+
+<CodeBlock filename="while_true_break.py" code={`numeros = [4, 8, 15, 16, 23, 42]
+indice = 0
+
+while True:
+    if indice >= len(numeros):
+        break
+    print(numeros[indice])
+    indice = indice + 1`} />
+
+<Dica>
+  `len(numeros)` devolve o tamanho da lista. Ainda não estudamos listas
+  formalmente (isso vem no Módulo 4), mas vale ver esse exemplo agora
+  para entender o `while True` + `break` na prática.
+</Dica>
+
+<ComoUmProgramadorPensa>
+  `while True` sem um `break` em algum ponto do bloco é quase sempre um
+  bug. Ao escrever esse padrão, um programador experiente já verifica,
+  antes de rodar: "existe um caminho garantido para o break acontecer?"
+</ComoUmProgramadorPensa>
+
+## Resumo da aula
+
+<Resumo>
+  `while condição:` repete um bloco enquanto a condição for verdadeira —
+  é essencial atualizar a variável testada para evitar loop infinito.
+  `while True` combinado com `break` é o padrão para repetir até um
+  evento específico acontecer, sem saber o número exato de repetições.
+</Resumo>
+
+## Exercícios
+
+1. O que causa um loop infinito em um `while`?
+2. Qual atalho de teclado interrompe um programa travado no terminal?
+3. Para que serve o `break` dentro de um `while True`?
+
+<Desafio>
+  Usando `while`, escreva um programa que imprima todos os números pares
+  de 2 a 20 (sem usar `for`, que veremos na próxima aula).
+</Desafio>
+
+## Próxima aula
+
+Na **Aula 3 — Laço for e range**, vamos conhecer o `for`, o laço mais
+usado no dia a dia em Python.
+

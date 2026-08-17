@@ -1,0 +1,146 @@
+export const meta = {
+  modulo: "Módulo 2 — Fundamentos",
+  titulo: "Aula 3 — Entrada e Saída",
+  duracao: "30 a 40 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+- Aprofundar o uso de `input()` e `print()`.
+- Formatar texto com f-strings.
+- Controlar separador e final de linha do `print()`.
+- Evitar os erros mais comuns ao ler dados do usuário.
+
+## Revisando input()
+
+Você já usou `input()` no projeto final do Módulo 1. Ele sempre devolve
+**texto** (`str`), mesmo que a pessoa digite um número:
+
+<CodeBlock filename="revisao_input.py" code={`idade = input("Qual é a sua idade? ")
+print(type(idade))  # <class 'str'>`} />
+
+## Formatando texto: o jeito antigo
+
+Antes das f-strings, o jeito comum de combinar texto e variáveis era com
+`+`, como fizemos na Aula 10 do Módulo 1:
+
+<CodeBlock filename="concatenacao.py" code={`nome = "Ana"
+idade = 25
+print("Olá, " + nome + "! Você tem " + str(idade) + " anos.")`} />
+
+Funciona, mas fica difícil de ler com muitas variáveis — e exige converter
+manualmente números para `str()` antes de somar com texto.
+
+## f-strings: o jeito moderno
+
+Uma **f-string** é uma string com um `f` antes das aspas, que permite
+inserir variáveis diretamente dentro de chaves `{}`:
+
+<CodeBlock filename="f_strings.py" code={`nome = "Ana"
+idade = 25
+print(f"Olá, {nome}! Você tem {idade} anos.")`} />
+
+Note que não precisamos de `str(idade)` — a f-string converte
+automaticamente. Isso é o padrão recomendado no Python moderno.
+
+<Dica>
+  Daqui para frente, vamos preferir f-strings no lugar de concatenação
+  com `+`. O código do Módulo 1 usava `+` de propósito, para não
+  introduzir conceitos antes da hora — agora que você conhece f-strings,
+  use-as sempre que puder.
+</Dica>
+
+## f-strings também fazem contas
+
+<CodeBlock filename="fstring_com_conta.py" code={`preco = 49.90
+quantidade = 3
+print(f"Total: {preco * quantidade}")`} />
+
+## Controlando casas decimais
+
+<CodeBlock filename="formatando_decimais.py" code={`preco = 49.9
+print(f"R$ {preco:.2f}")  # R$ 49.90`} />
+
+`:.2f` significa "formate como float com 2 casas decimais" — muito útil
+para valores em dinheiro.
+
+## print() com múltiplos valores
+
+<CodeBlock filename="print_multiplos.py" code={`nome = "Ana"
+idade = 25
+print(nome, idade)          # Ana 25
+print(nome, idade, sep=" - ")  # Ana - 25
+print("Carregando", end="...")
+print("pronto!")            # Carregando...pronto!`} />
+
+`sep` controla o que fica entre os valores (o padrão é um espaço); `end`
+controla o que vem depois de tudo (o padrão é uma quebra de linha).
+
+<Diagrama
+  titulo="input() e print() no fluxo do programa"
+  passos={[
+    { titulo: "print()", descricao: "pergunta ou mostra algo" },
+    { titulo: "input()", descricao: "espera a resposta (sempre str)" },
+    { titulo: "conversão", descricao: "int() ou float(), se necessário" },
+    { titulo: "f-string", descricao: "mostra o resultado formatado" },
+  ]}
+/>
+
+## Erros comuns
+
+<Atencao title="Esquecer o f antes das aspas">
+  `print("Olá, {nome}")` sem o `f` não substitui nada — imprime a chave
+  `{nome}` literalmente, ao invés do valor da variável.
+</Atencao>
+
+<Atencao title="Converter antes de precisar">
+  `idade = int(input("Idade: "))` já converte na mesma linha — muito
+  comum no dia a dia, mas leia com atenção: se a pessoa digitar algo que
+  não é número, essa linha gera `ValueError` (veremos tratamento de erros
+  mais adiante no curso).
+</Atencao>
+
+## Resumo da aula
+
+<Resumo>
+  `input()` sempre devolve `str`. F-strings (`f"texto {variavel}"`) são o
+  jeito moderno e recomendado de combinar texto com variáveis, e
+  convertem números automaticamente — `:.2f` formata casas decimais.
+  `print()` aceita `sep` (separador entre valores) e `end` (o que vem
+  depois, no lugar da quebra de linha padrão).
+</Resumo>
+
+## Exercícios
+
+1. Reescreva com f-string: `"Nome: " + nome + ", idade: " + str(idade)`.
+2. O que `f"{3.14159:.2f}"` produz?
+3. O que acontece se você escrever `print("Olá, {nome}")` sem o `f`?
+4. Qual parâmetro do `print()` controla o que aparece entre múltiplos
+   valores?
+
+<Desafio>
+  Peça ao usuário o preço de um produto e a quantidade desejada (ambos
+  com `input()`), calcule o total com f-string e formate o resultado com
+  duas casas decimais, no formato `Total: R$ 149.70`.
+</Desafio>
+
+<Dica>
+  Este desafio usa `input()`, então a correção automática fica menos
+  confiável aqui — a saída inclui o texto do prompt que você escolheu
+  escrever, que varia de pessoa para pessoa. Use o playground abaixo como
+  prática livre e confira visualmente se o resultado bate com o esperado.
+</Dica>
+
+<PyPlayground
+  titulo="desafio_total"
+  usaInput
+  entradasIniciais={`49.90\n3`}
+  codigoInicial={`# escreva seu código aqui
+`}
+/>
+
+## Próxima aula
+
+Na **Aula 4 — Operadores**, vamos estudar operadores aritméticos,
+relacionais e lógicos — a base para tomar decisões no código.

@@ -1,0 +1,121 @@
+export const meta = {
+  modulo: "Módulo 1 — Primeiros Passos no Python",
+  titulo: "Aula 9 — Boas Práticas Desde o Primeiro Dia",
+  duracao: "20 a 30 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+- Nomear variáveis de forma clara.
+- Escrever comentários úteis (e saber quando não comentar).
+- Conhecer o `snake_case` e a convenção PEP 8.
+
+## Por que isso importa desde já?
+
+É tentador pensar "boas práticas eu aprendo depois, agora só quero fazer
+funcionar". O problema é que hábitos se formam rápido — e é muito mais
+fácil aprender certo desde o início do que desaprender depois de meses.
+
+## Nomeando variáveis
+
+Um nome de variável deve dizer **o que ela guarda**, não como ela foi
+calculada.
+
+<CodeBlock filename="ruim.py" code={`x = 25
+y = x * 2
+z = y + 10`} />
+
+<CodeBlock filename="bom.py" code={`idade = 25
+idade_em_dobro = idade * 2
+idade_daqui_a_dez_anos = idade_em_dobro + 10`} />
+
+O segundo exemplo é mais longo, mas qualquer pessoa entende o que está
+acontecendo sem precisar rodar o código mentalmente.
+
+<Dica>
+  Uma boa pergunta para testar um nome de variável: "se eu mostrasse só
+  essa linha para alguém, sem contexto nenhum, essa pessoa entenderia o
+  que a variável representa?"
+</Dica>
+
+## snake_case
+
+Em Python, a convenção é escrever nomes de variáveis e funções em
+**snake_case**: tudo minúsculo, com underscore separando palavras.
+
+<CodeBlock filename="convencao.py" code={`nome_completo = "Ana Silva"
+data_de_nascimento = "1998-04-12"
+total_de_itens = 12`} />
+
+Isso é diferente de outras linguagens (JavaScript, por exemplo, usa
+`camelCase`). Seguir a convenção da própria linguagem facilita a leitura
+para qualquer outro programador Python que olhar seu código.
+
+## Comentários
+
+Comentários explicam o **porquê**, não o **o quê** — o código já diz o
+que está acontecendo.
+
+<CodeBlock filename="comentarios.py" code={`# Ruim: só repete o que o código já diz
+idade = 25  # define a variável idade como 25
+
+# Bom: explica uma decisão que não é óbvia
+idade = 25  # idade mínima usada como valor padrão nos testes`} />
+
+<Atencao title="Comentário desatualizado é pior que nenhum comentário">
+  Se você mudar o código, lembre de atualizar (ou remover) o comentário
+  relacionado. Um comentário que descreve um comportamento antigo confunde
+  mais do que ajuda.
+</Atencao>
+
+## PEP 8
+
+**PEP 8** é o guia oficial de estilo do Python. Você não precisa
+decorá-lo, mas vale conhecer algumas regras centrais:
+
+- Use 4 espaços por nível de indentação (nunca tabulação).
+- Linhas com, no máximo, cerca de 79 caracteres.
+- Dois espaços em branco entre funções no nível principal do arquivo.
+- Espaços ao redor de operadores: `idade = 25`, não `idade=25`.
+
+<Curiosidade>
+  PEP significa *Python Enhancement Proposal* — o mesmo processo formal
+  usado para propor mudanças na própria linguagem Python é usado para
+  definir seu guia de estilo. A PEP 8 foi escrita por Guido van Rossum,
+  criador do Python, junto com outros colaboradores, em 2001.
+</Curiosidade>
+
+<ComoUmProgramadorPensa>
+  Código é lido muito mais vezes do que é escrito. Um programador
+  experiente otimiza para quem vai ler o código depois — inclusive ele
+  mesmo, seis meses no futuro, sem lembrar mais o contexto.
+</ComoUmProgramadorPensa>
+
+## Resumo da aula
+
+<Resumo>
+  Nomeie variáveis pelo que elas representam, em `snake_case`. Use
+  comentários para explicar decisões, não para repetir o código. A PEP 8
+  é o guia oficial de estilo do Python — 4 espaços de indentação, espaços
+  ao redor de operadores, linhas não muito longas.
+</Resumo>
+
+## Exercícios
+
+1. Reescreva em `snake_case`: `NomeCompleto`, `idadeDoUsuario`, `TOTAL`.
+2. O que a PEP 8 recomenda para indentação?
+3. Dê um exemplo de comentário útil e um exemplo de comentário
+   desnecessário.
+
+<Desafio>
+  Pegue o arquivo `sobre_mim.py` que você criou na Aula 5 e reescreva-o
+  seguindo tudo o que aprendeu aqui: nomes de variável claros, snake_case
+  e ao menos um comentário que explique uma decisão (não o óbvio).
+</Desafio>
+
+## Próxima aula
+
+Na **Aula 10 — Projeto Final do Módulo 1**, vamos juntar tudo o que
+aprendemos em um programa completo.
+

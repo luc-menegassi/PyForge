@@ -1,0 +1,116 @@
+export const meta = {
+  modulo: "Módulo 1 — Primeiros Passos no Python",
+  titulo: "Aula 4 — Terminal para Iniciantes",
+  duracao: "25 a 35 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+- Perder o medo do terminal.
+- Navegar entre pastas usando comandos.
+- Criar, copiar, mover e remover arquivos pelo terminal.
+- Entender por que programadores preferem o terminal à interface gráfica.
+
+## Por que usar o terminal?
+
+A interface gráfica (clicar em ícones e pastas) é ótima para o dia a dia,
+mas é lenta para tarefas repetitivas. O terminal permite fazer, em um
+comando, o que levaria vários cliques — e, mais importante, permite
+**automatizar** tarefas, que é justamente um dos grandes poderes do
+Python.
+
+<Dica>
+  Não existe "comando errado que quebra o computador" nos comandos desta
+  aula. Pode digitar e testar sem medo.
+</Dica>
+
+## Onde estou? — `pwd`
+
+`pwd` (*print working directory*) mostra a pasta atual:
+
+<CodeBlock filename="terminal" code={`pwd`} />
+
+## O que tem aqui? — `ls`
+
+`ls` (*list*) lista os arquivos e pastas do diretório atual:
+
+<CodeBlock filename="terminal" code={`ls`} />
+
+No Windows (PowerShell), o equivalente é `dir`, mas `ls` também costuma
+funcionar.
+
+## Mudando de pasta — `cd`
+
+`cd` (*change directory*) navega entre pastas:
+
+<CodeBlock filename="terminal" code={`cd Documentos
+cd ..
+cd /home/usuario/projetos`} />
+
+`cd ..` sobe um nível (volta para a pasta anterior). `cd` sozinho (sem
+argumento) volta para a pasta pessoal do usuário na maioria dos sistemas.
+
+## Criando uma pasta — `mkdir`
+
+<CodeBlock filename="terminal" code={`mkdir meu-projeto`} />
+
+## Removendo arquivos e pastas — `rm`
+
+<CodeBlock filename="terminal" code={`rm arquivo.txt
+rm -r pasta-inteira`} />
+
+<Atencao title="rm não tem lixeira">
+  Diferente de excluir pelo mouse, `rm` apaga direto, sem passar pela
+  lixeira. Confira sempre o nome do arquivo ou pasta antes de confirmar.
+</Atencao>
+
+## Copiando — `cp`
+
+<CodeBlock filename="terminal" code={`cp arquivo.py copia.py
+cp -r pasta-original pasta-copia`} />
+
+## Movendo ou renomeando — `mv`
+
+<CodeBlock filename="terminal" code={`mv arquivo.py novo-nome.py
+mv arquivo.py pasta-destino/`} />
+
+`mv` serve tanto para mover um arquivo de lugar quanto para renomeá-lo —
+no fundo, renomear é apenas "mover" para o mesmo lugar com outro nome.
+
+<ComoUmProgramadorPensa>
+  Sempre que for apagar ou sobrescrever algo pelo terminal, um programador
+  experiente pausa um segundo e confere o caminho completo antes de
+  apertar Enter. Ao contrário da interface gráfica, o terminal não
+  pergunta "tem certeza?" — ele confia que você sabe o que está pedindo.
+</ComoUmProgramadorPensa>
+
+## Resumo da aula
+
+<Resumo>
+  `pwd` mostra onde você está, `ls` lista o conteúdo da pasta, `cd` navega
+  entre diretórios, `mkdir` cria pastas, `rm` remove arquivos e pastas,
+  `cp` copia e `mv` move ou renomeia. Esses sete comandos cobrem a maior
+  parte da navegação do dia a dia.
+</Resumo>
+
+## Exercícios
+
+1. Qual comando mostra o diretório atual?
+2. Como voltar uma pasta usando `cd`?
+3. Qual a diferença entre `cp` e `mv`?
+4. O que acontece se você usar `rm` em um arquivo — ele vai para a
+   lixeira?
+
+<Desafio>
+  Pelo terminal: crie uma pasta chamada `pyforge-testes`, entre nela, crie
+  um arquivo vazio chamado `notas.txt` (dica: pesquise o comando `touch`
+  no Linux/macOS, ou `New-Item` no PowerShell), renomeie-o para
+  `anotacoes.txt` e depois remova a pasta inteira.
+</Desafio>
+
+## Próxima aula
+
+Na **Aula 5 — Seu primeiro programa**, vamos finalmente escrever e
+executar nosso primeiro código Python.
+

@@ -1,0 +1,125 @@
+export const meta = {
+  modulo: "Módulo 1 — Primeiros Passos no Python",
+  titulo: "Aula 2 — Instalando o Python e Preparando o Ambiente",
+  duracao: "25 a 35 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+- Instalar o Python no seu sistema operacional.
+- Verificar se a instalação foi concluída com sucesso.
+- Entender o que é o `pip` e para que serve.
+- Preparar um ambiente de desenvolvimento organizado.
+
+## Antes de instalar
+
+O Python já vem pré-instalado em algumas distribuições Linux e no macOS,
+mas geralmente em uma versão desatualizada, usada pelo próprio sistema
+operacional. **Não mexa nessa instalação do sistema** — vamos instalar (ou
+usar) uma versão própria para os nossos estudos.
+
+## Windows
+
+1. Acesse [python.org/downloads](https://www.python.org/downloads/).
+2. Baixe a versão mais recente do instalador.
+3. Na primeira tela do instalador, marque a opção **"Add python.exe to PATH"**
+   antes de clicar em Install — esse é o passo que mais gente esquece.
+4. Conclua a instalação normalmente.
+
+<Atencao title="Esqueceu de marcar o PATH?">
+  Sem isso, o Windows não vai reconhecer o comando `python` no terminal.
+  Se acontecer, é só reinstalar e marcar a caixa, ou adicionar o Python ao
+  PATH manualmente pelas configurações do sistema.
+</Atencao>
+
+## Fedora
+
+<CodeBlock filename="terminal" code={`sudo dnf install python3 python3-pip`} />
+
+## Ubuntu / Debian
+
+<CodeBlock filename="terminal" code={`sudo apt update
+sudo apt install python3 python3-pip`} />
+
+## macOS
+
+A forma mais simples é usando o [Homebrew](https://brew.sh):
+
+<CodeBlock filename="terminal" code={`brew install python3`} />
+
+## Verificando a instalação
+
+Em qualquer sistema, abra o terminal e digite:
+
+<CodeBlock filename="terminal" code={`python3 --version`} />
+
+Você deve ver algo como `Python 3.12.4`. No Windows, o comando costuma ser
+`python --version` (sem o "3").
+
+<Dica>
+  Se `python3` não funcionar, tente `python`. Alguns sistemas configuram o
+  comando de formas diferentes — o importante é que algum dos dois
+  responda com um número de versão.
+</Dica>
+
+## O que é o pip?
+
+`pip` é o **gerenciador de pacotes** do Python. É por meio dele que você
+instala bibliotecas prontas, feitas por outras pessoas, para não precisar
+reinventar a roda.
+
+<CodeBlock filename="terminal" code={`pip3 --version`} />
+
+Exemplo de uso (não precisa rodar isso agora):
+
+<CodeBlock filename="terminal" code={`pip3 install requests`} />
+
+Esse comando instalaria a biblioteca `requests`, usada para fazer
+requisições na internet — algo que veremos no módulo de Automação.
+
+## Ambientes virtuais (introdução)
+
+Cada projeto Python pode precisar de versões diferentes de uma mesma
+biblioteca. Um **ambiente virtual** cria uma "caixa isolada" para cada
+projeto, evitando conflitos.
+
+<CodeBlock filename="terminal" code={`python3 -m venv venv`} />
+
+Vamos usar ambientes virtuais na prática a partir da Aula 8, quando
+falarmos sobre organização de projetos — por enquanto, só guarde o
+conceito.
+
+<ComoUmProgramadorPensa>
+  Programadores experientes nunca instalam bibliotecas "soltas" no sistema
+  operacional. Antes de instalar qualquer coisa, a pergunta é: "isso deve
+  ficar isolado dentro de um ambiente virtual do projeto, ou é uma
+  ferramenta que uso globalmente?" Essa separação evita que um projeto
+  quebre outro.
+</ComoUmProgramadorPensa>
+
+## Resumo da aula
+
+<Resumo>
+  Instalamos o Python (Windows, Fedora, Ubuntu ou macOS) e verificamos a
+  instalação com `--version`. Conhecemos o `pip`, o gerenciador de pacotes
+  do Python, e tivemos uma primeira introdução a ambientes virtuais, que
+  isolam as dependências de cada projeto.
+</Resumo>
+
+## Exercícios
+
+1. Qual comando verifica a versão instalada do Python?
+2. Para que serve o `pip`?
+3. Por que é recomendado usar ambientes virtuais?
+
+<Desafio>
+  Instale o Python na sua máquina (se ainda não tiver) e rode
+  `pip3 list` no terminal. Anote quais pacotes já aparecem instalados por
+  padrão.
+</Desafio>
+
+## Próxima aula
+
+Na **Aula 3 — Escolhendo uma IDE**, vamos instalar e configurar o VS Code,
+a ferramenta que usaremos durante todo o curso para escrever código.

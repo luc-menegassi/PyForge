@@ -1,0 +1,163 @@
+export const meta = {
+  modulo: "Módulo 2 — Fundamentos",
+  titulo: "Aula 2 — Tipos de Dados",
+  duracao: "30 a 40 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+- Conhecer os quatro tipos de dados primitivos do Python.
+- Usar `type()` para descobrir o tipo de um valor.
+- Entender por que a conversão entre tipos é necessária.
+- Evitar os erros mais comuns ao misturar tipos.
+
+## Os quatro tipos primitivos
+
+<CodeBlock filename="tipos.py" code={`nome = "Ana"          # str    (texto)
+idade = 25            # int    (inteiro)
+altura = 1.68          # float  (decimal)
+esta_estudando = True  # bool   (verdadeiro ou falso)`} />
+
+## str — texto
+
+Qualquer valor entre aspas simples ou duplas é uma **string**.
+
+<CodeBlock filename="strings.py" code={`nome = "Ana Silva"
+cidade = 'São Paulo'
+frase = "Ela disse: 'olá!'"`} />
+
+<Dica>
+  Use aspas duplas por padrão e aspas simples quando o próprio texto já
+  contiver aspas duplas (ou vice-versa) — evita ter que escapar caracteres.
+</Dica>
+
+## int — números inteiros
+
+<CodeBlock filename="inteiros.py" code={`idade = 25
+ano = 2026
+temperatura_negativa = -5`} />
+
+## float — números decimais
+
+<CodeBlock filename="decimais.py" code={`altura = 1.68
+pi = 3.14159
+saldo = -12.50`} />
+
+<Atencao title="Ponto, não vírgula">
+  Python usa **ponto** como separador decimal, mesmo em português.
+  `altura = 1,68` não gera o número esperado — cria, na verdade, uma
+  **tupla** com dois valores (`1` e `68`), algo que veremos no Módulo 4.
+</Atencao>
+
+## bool — verdadeiro ou falso
+
+<CodeBlock filename="booleanos.py" code={`esta_chovendo = False
+maior_de_idade = True`} />
+
+Booleanos são o resultado de comparações, que veremos com profundidade no
+Módulo 3 (Controle de Fluxo):
+
+<CodeBlock filename="comparacao.py" code={`idade = 20
+maior_de_idade = idade >= 18
+print(maior_de_idade)  # True`} />
+
+## Descobrindo o tipo com type()
+
+<CodeBlock filename="descobrindo_tipo.py" code={`print(type("Ana"))    # <class 'str'>
+print(type(25))       # <class 'int'>
+print(type(1.68))     # <class 'float'>
+print(type(True))     # <class 'bool'>`} />
+
+<Diagrama
+  titulo="Os quatro tipos primitivos"
+  passos={[
+    { titulo: "str", descricao: '"Ana", "São Paulo"' },
+    { titulo: "int", descricao: "25, -5, 2026" },
+    { titulo: "float", descricao: "1.68, 3.14, -12.5" },
+    { titulo: "bool", descricao: "True, False" },
+  ]}
+/>
+
+## Convertendo entre tipos
+
+Lembra do `int()` que usamos no projeto final do Módulo 1? Ele é uma
+**função de conversão**. Existem equivalentes para os outros tipos:
+
+<CodeBlock filename="conversoes.py" code={`idade_texto = "25"
+idade_numero = int(idade_texto)      # str -> int
+
+preco_texto = "19.90"
+preco_numero = float(preco_texto)    # str -> float
+
+idade = 25
+idade_como_texto = str(idade)        # int -> str
+
+print(type(idade_numero))  # <class 'int'>`} />
+
+<ComoUmProgramadorPensa>
+  Sempre que um valor vier de `input()`, de um arquivo ou de uma
+  requisição na internet, um programador experiente já assume que ele vai
+  chegar como `str` — e decide conscientemente se e quando converter,
+  antes de fazer contas com aquele valor.
+</ComoUmProgramadorPensa>
+
+## Erros comuns ao misturar tipos
+
+<CodeBlock filename="erro_tipo.py" code={`idade = "25"
+print(idade + 1)`} />
+
+<CodeBlock filename="terminal" code={`TypeError: can only concatenate str (not "int") to str`} />
+
+A correção é converter antes de operar:
+
+<CodeBlock filename="correcao.py" code={`idade = "25"
+print(int(idade) + 1)`} />
+
+## Resumo da aula
+
+<Resumo>
+  Python tem quatro tipos primitivos: `str` (texto), `int` (inteiro),
+  `float` (decimal) e `bool` (verdadeiro/falso). `type()` revela o tipo de
+  um valor. `int()`, `float()` e `str()` convertem entre eles — necessário
+  sempre que dados vêm de fora (como `input()`) como texto.
+</Resumo>
+
+## Exercícios
+
+1. Qual o tipo do valor `3.0`? E de `3`?
+2. O que `type(True)` retorna?
+3. Por que `"10" + "5"` resulta em `"105"` e não em `15`?
+4. Como converter a string `"3.14"` para um número decimal usável em
+   contas?
+
+<Desafio>
+  Crie uma variável `preco_texto = "49.90"`. Sem alterar essa linha,
+  escreva o código que converte para número, aplica 10% de desconto, e
+  imprime o resultado com `print()`.
+</Desafio>
+
+<Dica>
+  Números decimais às vezes aparecem com muitas casas por causa de como o
+  computador representa frações internamente (ex.: `44.909999999999997`
+  em vez de `44.91`). A função `round(valor, 2)` arredonda para 2 casas
+  decimais — use `print(round(resultado, 2))` para uma saída limpa.
+</Dica>
+
+Teste sua solução aqui — o site confere automaticamente se a saída bate
+com o resultado esperado:
+
+<PyPlayground
+  titulo="desafio_desconto"
+  codigoInicial={`preco_texto = "49.90"
+
+# escreva seu código abaixo
+`}
+  validacao={{ saidaEsperada: "44.91" }}
+/>
+
+## Próxima aula
+
+Na **Aula 3 — Entrada e Saída**, vamos aprofundar `input()` e `print()`,
+incluindo formatação de texto com f-strings.
+

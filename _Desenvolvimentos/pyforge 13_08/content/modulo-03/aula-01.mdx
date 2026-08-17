@@ -1,0 +1,154 @@
+export const meta = {
+  modulo: "Módulo 3 — Controle de Fluxo",
+  titulo: "Aula 1 — Condicionais (if, elif, else)",
+  duracao: "30 a 40 minutos",
+  nivel: "Iniciante",
+};
+
+## Objetivos da aula
+
+- Tomar decisões no código com `if`.
+- Encadear várias condições com `elif`.
+- Definir um caminho padrão com `else`.
+- Aninhar condicionais quando necessário.
+
+## Por que "controle de fluxo"?
+
+Até agora, todo código que escrevemos rodava de cima para baixo, linha
+por linha, sem desvios. **Controle de fluxo** é o nome para os recursos
+que permitem ao programa **decidir** o que executar (`if`) ou **repetir**
+algo (`while`, `for` — próximas aulas). É aqui que os programas deixam de
+ser uma lista de instruções fixas e passam a reagir a diferentes
+situações.
+
+## if — se
+
+<CodeBlock filename="if_simples.py" code={`idade = 20
+
+if idade >= 18:
+    print("Maior de idade")`} />
+
+A estrutura é: `if`, uma condição que resulta em `True` ou `False`
+(lembra dos operadores relacionais da Aula 4 do Módulo 2?), dois-pontos, e
+um bloco indentado que só roda se a condição for verdadeira.
+
+<Atencao title="Não esqueça o dois-pontos">
+  `if idade >= 18` sem o `:` no final gera `SyntaxError`. E a linha
+  seguinte precisa estar indentada — lembra da Aula 7 do Módulo 1?
+  `IndentationError` é um dos erros mais comuns nesta fase do curso.
+</Atencao>
+
+## if / else — se / senão
+
+<CodeBlock filename="if_else.py" code={`idade = 15
+
+if idade >= 18:
+    print("Maior de idade")
+else:
+    print("Menor de idade")`} />
+
+`else` define o que acontece quando a condição do `if` é falsa. Só pode
+haver um `else` por `if`, e ele nunca tem sua própria condição.
+
+## if / elif / else — várias condições
+
+<CodeBlock filename="if_elif_else.py" code={`nota = 7
+
+if nota >= 9:
+    print("Conceito A")
+elif nota >= 7:
+    print("Conceito B")
+elif nota >= 5:
+    print("Conceito C")
+else:
+    print("Reprovado")`} />
+
+Python avalia as condições **na ordem**, de cima para baixo, e para no
+primeiro `if`/`elif` verdadeiro — os demais nem chegam a ser avaliados.
+
+<Diagrama
+  titulo="Como o Python avalia elif"
+  passos={[
+    { titulo: "nota >= 9?", descricao: "se falso, próxima condição" },
+    { titulo: "nota >= 7?", descricao: "se falso, próxima condição" },
+    { titulo: "nota >= 5?", descricao: "se falso, cai no else" },
+    { titulo: "else", descricao: "roda só se nada acima for True" },
+  ]}
+/>
+
+<ComoUmProgramadorPensa>
+  A ordem das condições importa. Se a primeira linha desse exemplo fosse
+  `elif nota >= 5:` antes de `elif nota >= 7:`, uma nota 8 cairia na
+  condição `>= 5` primeiro e nunca chegaria a ser comparada com `>= 7` —
+  um bug sutil e comum. Ao escrever várias condições, pense sempre da mais
+  específica para a mais genérica.
+</ComoUmProgramadorPensa>
+
+## Condicionais aninhadas
+
+Um `if` pode conter outro `if` dentro do seu bloco:
+
+<CodeBlock filename="aninhado.py" code={`idade = 20
+tem_documento = True
+
+if idade >= 18:
+    if tem_documento:
+        print("Pode entrar")
+    else:
+        print("Maior de idade, mas precisa do documento")
+else:
+    print("Menor de idade")`} />
+
+<Dica>
+  Condicionais aninhadas funcionam, mas ficam difíceis de ler rápido
+  quando passam de 2 ou 3 níveis. Frequentemente dá para simplificar
+  combinando as condições com `and`, que vimos na Aula 4 do Módulo 2:
+  `if idade >= 18 and tem_documento:` substitui o aninhamento acima em uma
+  única linha, com o mesmo resultado.
+</Dica>
+
+## Testando na prática
+
+<PyPlayground
+  titulo="condicionais"
+  codigoInicial={`nota = 7
+
+if nota >= 9:
+    print("Conceito A")
+elif nota >= 7:
+    print("Conceito B")
+elif nota >= 5:
+    print("Conceito C")
+else:
+    print("Reprovado")`}
+  validacao={{ saidaEsperada: "Conceito B" }}
+/>
+
+## Resumo da aula
+
+<Resumo>
+  `if` executa um bloco quando uma condição é verdadeira. `elif` encadeia
+  condições adicionais, avaliadas em ordem. `else` define o caminho
+  padrão quando nenhuma condição anterior é verdadeira. Condicionais
+  podem ser aninhadas, mas frequentemente é mais claro combinar condições
+  com `and`/`or`.
+</Resumo>
+
+## Exercícios
+
+1. O que acontece se nenhuma condição de um `if/elif/else` for
+   verdadeira e não houver `else`?
+2. Por que a ordem das condições em uma cadeia de `elif` importa?
+3. Reescreva o exemplo de condicional aninhada desta aula usando `and`,
+   em uma única condição.
+
+<Desafio>
+  Escreva um programa que receba um número (fixe o valor em uma variável,
+  sem usar `input()` ainda) e imprima `"Positivo"`, `"Negativo"` ou
+  `"Zero"`, conforme o caso.
+</Desafio>
+
+## Próxima aula
+
+Na **Aula 2 — Laço while**, vamos aprender a repetir um bloco de código
+enquanto uma condição continuar verdadeira.

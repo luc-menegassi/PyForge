@@ -1,39 +1,55 @@
-import createMDX from "@next/mdx";
-import remarkGfm from "remark-gfm";
+name: Deploy PyForge to GitHub Pages
 
-// GITHUB_PAGES=true é setado só pelo workflow de deploy (ver
-// .github/workflows/deploy.yml) — localmente (`npm run dev`), o site
-// continua rodando normal, sem basePath, sem exigir a variável.
-const isGithubPages = process.env.GITHUB_PAGES === "true";
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
 
-// Nome do repositório no GitHub. Só é usado se o Pages for publicado
-// como "project page" (usuario.github.io/PyForge). Se um dia vocês
-// migrarem para um domínio próprio ou para um repo usuario.github.io,
-// basta remover basePath/assetPrefix abaixo.
-const repoName = "PyForge";
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  pageExtensions: ["ts", "tsx", "mdx"],
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
-  // Gera HTML/CSS/JS estáticos em ./out no lugar de rodar um servidor —
-  // é isso que o GitHub Pages consegue servir. O PyForge não usa API
-  // routes, SSR dinâmico nem imagens otimizadas pelo Next, então essa
-  // troca não exige mudança de lógica no código.
-  output: "export",
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
 
-  // Sem isso, rotas como /curso/modulo-01/aula-01 retornam 404 no Pages
-  // (ele espera /curso/modulo-01/aula-01/index.html).
-  trailingSlash: true,
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
 
-  basePath: isGithubPages ? `/${repoName}` : "",
-  assetPrefix: isGithubPages ? `/${repoName}/` : "",
-};
+      - name: Instalar dependências
+        run: npm ci
 
-const withMDX = createMDX({
-  options: {
-    remarkPlugins: [remarkGfm],
-  },
-});
+      - name: Build estático (com basePath do GitHub Pages)
+        run: npm run build
+        env:
+          GITHUB_PAGES: "true"
 
-export default withMDX(nextConfig);
+      - name: Adicionar .nojekyll
+        run: touch ./out/.nojekyll
+
+      - name: Preparar artefato do Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
